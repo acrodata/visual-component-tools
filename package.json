@@ -1,0 +1,17 @@
+{
+  "name": "@acrodata/visual-component-tools",
+  "version": "0.0.0",
+  "description": "Command line tool for creating and publishing visual component",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nzbin<nzb329@163.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
