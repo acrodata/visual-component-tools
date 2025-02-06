@@ -5,13 +5,29 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "index.js",
+  "main": "./bin/adviz.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "adviz": "node ./bin/adviz.js"
+  },
+  "bin": {
+    "adviz": "./bin/adviz.js"
   },
   "author": "nzbin<nzb329@163.com>",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "commander": "^13.1.0",
+    "fs-extra": "^11.3.0",
+    "jszip": "^3.10.1",
+    "lodash-es": "^4.17.21",
+    "tslib": "^2.3.0",
+    "webpack": "^5.97.1"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/lodash-es": "^4.17.6",
+    "prettier": "^3.4.2",
+    "typescript": "~5.5.2"
+  }
 }
