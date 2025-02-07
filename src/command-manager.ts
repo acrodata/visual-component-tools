@@ -1,6 +1,11 @@
 import { spawn } from 'child_process';
 import { env } from 'process';
+
 import AdmZip from 'adm-zip';
+
+import { readJsonFromVisual } from './utils.js';
+
+const ngJson = readJsonFromVisual('angular.json');
 
 export default class CommandManager {
   public static start(name: string, options: Record<string, string>, rootPath: string) {
@@ -30,6 +35,9 @@ export default class CommandManager {
   }
 
   public static package(name: string, options: Record<string, any>, rootPath: string) {
+    // Store the visual name in the node environment
+    env.VISUAL_NAME = name;
+
     const ng = spawn('ng', ['build', name]);
 
     ng.stdout.on('data', data => {
@@ -42,9 +50,10 @@ export default class CommandManager {
 
     ng.on('close', code => {
       if (code == 0) {
+        const outputPath = ngJson.projects[name].architect.build.options.outputPath;
         const zip = new AdmZip();
-        zip.addLocalFolder(rootPath + `/dist/${name}`);
-        zip.writeZip(rootPath + `/dist/${name}.zip`, () => {
+        zip.addLocalFolder(outputPath);
+        zip.writeZip(outputPath + '.zip', () => {
           console.log('Package created.');
         });
       }
