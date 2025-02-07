@@ -1,1 +1,1 @@
-# visual-component-cli
+# visual-component-tools

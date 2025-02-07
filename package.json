@@ -7,15 +7,26 @@
   },
   "main": "./bin/adviz.js",
   "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "adviz": "node ./bin/adviz.js"
-  },
   "bin": {
     "adviz": "./bin/adviz.js"
   },
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "keywords": [
+    "viz",
+    "visual-cli",
+    "visual-tools"
+  ],
   "author": "nzbin<nzb329@163.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "adviz": "node ./bin/adviz.js",
+    "publish": "npm run clean && npm run build && npm publish"
+  },
   "dependencies": {
     "adm-zip": "^0.5.16",
     "commander": "^13.1.0",
@@ -28,6 +39,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/lodash-es": "^4.17.6",
     "prettier": "^3.4.2",
+    "rimraf": "^5.0.0",
     "typescript": "~5.5.2",
     "webpack": "^5.97.1"
   }
