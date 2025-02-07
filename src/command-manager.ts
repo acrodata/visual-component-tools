@@ -1,9 +1,12 @@
 import { spawn } from 'child_process';
-
+import { env } from 'process';
 import AdmZip from 'adm-zip';
 
 export default class CommandManager {
   public static start(name: string, options: Record<string, string>, rootPath: string) {
+    // Store the visual name in the node environment
+    env.VISUAL_NAME = name;
+
     // --port=4201 => { port: '4201' }  => ['--port=4201']
     // -p=4201     => { port: '=4201' } => ['--port=4201']
     const optsArr = Object.keys(options).map(key => {
