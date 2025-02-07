@@ -1,6 +1,6 @@
 {
   "name": "@acrodata/visual-component-tools",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Command line tool for creating and publishing visual component",
   "publishConfig": {
     "access": "public"
