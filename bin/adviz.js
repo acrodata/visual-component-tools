@@ -2,10 +2,9 @@
 
 'use strict';
 
-import AdmZip from 'adm-zip';
-import { spawn } from 'child_process';
 import { program } from 'commander';
 import { readJsonFromRoot } from '../lib/utils.js';
+import CommandManager from '../lib/command-manager.js';
 
 const npmPackage = readJsonFromRoot('package.json');
 const rootPath = process.cwd();
@@ -19,15 +18,9 @@ adviz
   .command('start')
   .usage('<argument> [options]')
   .argument('<name>', 'The name of the project to build.')
+  .option('-p, --port [port]', 'Set the port listening on')
   .action((name, options) => {
-    const ng = spawn('ng', ['serve', name]);
-    ng.stdout.on('data', data => {
-      console.log(`${data}`);
-    });
-    ng.stderr.on('data', data => {
-      console.error(`${data}`);
-    });
-    ng.on('close', code => {});
+    CommandManager.start(name, options, rootPath);
   });
 
 adviz
@@ -35,28 +28,15 @@ adviz
   .usage('<argument> [options]')
   .argument('<name>', 'The name of the project to package.')
   .action((name, options) => {
-    const ng = spawn('ng', ['build', name]);
-    ng.stdout.on('data', data => {
-      console.log(`${data}`);
-    });
-    ng.stderr.on('data', data => {
-      console.error(`${data}`);
-    });
-    ng.on('close', code => {
-      if (code == 0) {
-        const zip = new AdmZip();
-        zip.addLocalFolder(rootPath + `/dist/${name}`);
-        zip.writeZip(rootPath + `/dist/${name}.zip`, () => {
-          console.log('Package created.');
-        });
-      }
-    });
+    CommandManager.package(name, options, rootPath);
   });
 
 adviz
   .command('publish')
   .usage('<argument> [options]')
   .argument('<name>', 'The name of the project to publish.')
-  .action((name, options) => {});
+  .action((name, options) => {
+    CommandManager.publish(name, options, rootPath);
+  });
 
 program.parse(process.argv);

@@ -42,6 +42,13 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@types/adm-zip@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@types/adm-zip/-/adm-zip-0.5.7.tgz#eec10b6f717d3948beb64aca0abebc4b344ac7e9"
+  integrity sha512-DNEs/QvmyRLurdQPChqq0Md4zGvPwHerAJYWk9l2jCbD1VPpnzRJorOdiq4zsw09NFbYnhfsoEhWtxIzXpn2yw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/eslint-scope@^3.7.7":
   version "3.7.7"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.7.tgz#3108bd5f18b0cdb277c867b3dd449c9ed7079ac5"
