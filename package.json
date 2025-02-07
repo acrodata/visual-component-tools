@@ -17,17 +17,17 @@
   "author": "nzbin<nzb329@163.com>",
   "license": "MIT",
   "dependencies": {
+    "adm-zip": "^0.5.16",
     "commander": "^13.1.0",
     "fs-extra": "^11.3.0",
-    "jszip": "^3.10.1",
     "lodash-es": "^4.17.21",
-    "tslib": "^2.3.0",
-    "webpack": "^5.97.1"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/lodash-es": "^4.17.6",
     "prettier": "^3.4.2",
-    "typescript": "~5.5.2"
+    "typescript": "~5.5.2",
+    "webpack": "^5.97.1"
   }
 }
