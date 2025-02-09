@@ -1,8 +1,6 @@
-import webpack from 'webpack';
-
-import { readdirSync } from 'fs';
+import { existsSync, readdirSync } from 'fs';
 import { env } from 'process';
-
+import webpack from 'webpack';
 import { camelCase, capitalize } from 'lodash-es';
 import { readJsonFromVisual } from './utils.js';
 
@@ -10,7 +8,7 @@ const ngJson = readJsonFromVisual('angular.json');
 const projectName = env.VISUAL_NAME!;
 const visualRoot = ngJson.projects[projectName].root;
 const sourceRoot = ngJson.projects[projectName].sourceRoot;
-const pkg = readJsonFromVisual(visualRoot + '/package.json');
+const pkgJson = readJsonFromVisual(visualRoot + '/package.json');
 const exposes = {};
 
 const getDirectories = (source: string) =>
@@ -19,8 +17,10 @@ const getDirectories = (source: string) =>
     .map(dirent => dirent.name);
 
 getDirectories(sourceRoot).forEach(dir => {
-  const exposedModule = capitalize(camelCase(dir));
-  exposes[exposedModule] = `./${sourceRoot}/${dir}/${dir}.component.ts`;
+  if (existsSync(`${sourceRoot}/${dir}/manifest.json`)) {
+    const exposedModule = capitalize(camelCase(dir));
+    exposes[exposedModule] = `./${sourceRoot}/${dir}`;
+  }
 });
 
 const ModuleFederationPlugin = webpack.container.ModuleFederationPlugin;
@@ -32,19 +32,19 @@ export default {
   output: {
     scriptType: 'text/javascript',
     publicPath: 'auto',
-    uniqueName: pkg.name,
+    uniqueName: pkgJson.name,
   },
   optimization: {
     runtimeChunk: false,
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: pkg.name,
+      name: pkgJson.name,
       library: {
         type: 'var',
-        name: pkg.name,
+        name: pkgJson.name,
       },
-      filename: pkg.filename,
+      filename: pkgJson.filename,
       exposes,
       shared: {
         '@angular/core': {
