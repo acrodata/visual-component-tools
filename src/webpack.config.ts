@@ -8,7 +8,7 @@ const ngJson = readJsonFromVisual('angular.json');
 const projectName = env.VISUAL_NAME!;
 const visualRoot = ngJson.projects[projectName].root;
 const sourceRoot = ngJson.projects[projectName].sourceRoot;
-const pkgJson = readJsonFromVisual(visualRoot + '/package.json');
+const pkgJson = readJsonFromVisual(`${visualRoot}/package.json`);
 const exposes = {};
 
 const getDirectories = (source: string) =>
@@ -17,8 +17,10 @@ const getDirectories = (source: string) =>
     .map(dirent => dirent.name);
 
 getDirectories(sourceRoot).forEach(dir => {
-  if (existsSync(`${sourceRoot}/${dir}/manifest.json`)) {
-    const exposedModule = capitalize(camelCase(dir));
+  const manifestPath = `${sourceRoot}/${dir}/manifest.json`;
+  if (existsSync(manifestPath)) {
+    const manifestJson = readJsonFromVisual(manifestPath);
+    const exposedModule = capitalize(camelCase(manifestJson.name));
     exposes[exposedModule] = `./${sourceRoot}/${dir}`;
   }
 });
