@@ -18,6 +18,7 @@ adviz
   .command('start')
   .usage('<argument> [options]')
   .argument('<name>', 'The name of the project to build.')
+  .option('-h, --host [host]', 'Set the host listening on')
   .option('-p, --port [port]', 'Set the port listening on')
   .action((name, options) => {
     CommandManager.start(name, options, rootPath);

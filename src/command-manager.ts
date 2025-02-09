@@ -1,8 +1,6 @@
 import { spawn } from 'child_process';
 import { env } from 'process';
-
 import AdmZip from 'adm-zip';
-
 import { readJsonFromVisual } from './utils.js';
 
 const ngJson = readJsonFromVisual('angular.json');
