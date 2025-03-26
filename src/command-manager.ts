@@ -10,13 +10,26 @@ export default class CommandManager {
     // Store the visual name in the node environment
     env.VISUAL_NAME = name;
 
+    const visualRoot = ngJson.projects[name].root;
+    const pkgJson = readJsonFromVisual(`${visualRoot}/package.json`);
+
+    // Get the port from the server field in the package.json
+    let port = '';
+    try {
+      port = pkgJson.server ? new URL(pkgJson.server).port : '';
+    } catch (e) {
+      console.error(e);
+    }
+
+    const opts = Object.assign({ port }, options);
+
     // --port=4201 => { port: '4201' }  => ['--port=4201']
     // -p=4201     => { port: '=4201' } => ['--port=4201']
-    const optsArr = Object.keys(options).map(key => {
-      if (options[key].startsWith('=')) {
-        return `--${key}${options[key]}`;
+    const optsArr = Object.keys(opts).map(key => {
+      if (opts[key].startsWith('=')) {
+        return `--${key}${opts[key]}`;
       }
-      return `--${key}=${options[key]}`;
+      return `--${key}=${opts[key]}`;
     });
 
     const ng = spawn('ng', ['serve', name, ...optsArr]);
