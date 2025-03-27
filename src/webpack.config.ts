@@ -1,7 +1,7 @@
 import { existsSync, readdirSync } from 'fs';
+import { camelCase, upperFirst } from 'lodash-es';
 import { env } from 'process';
 import webpack from 'webpack';
-import { camelCase, capitalize } from 'lodash-es';
 import { readJsonFromVisual } from './utils.js';
 
 const ngJson = readJsonFromVisual('angular.json');
@@ -20,7 +20,7 @@ getDirectories(sourceRoot).forEach(dir => {
   const manifestPath = `${sourceRoot}/${dir}/manifest.json`;
   if (existsSync(manifestPath)) {
     const manifestJson = readJsonFromVisual(manifestPath);
-    const exposedModule = capitalize(camelCase(manifestJson.name));
+    const exposedModule = upperFirst(camelCase(manifestJson.name));
     exposes[exposedModule] = `./${sourceRoot}/${dir}`;
   }
 });
