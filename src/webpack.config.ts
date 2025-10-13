@@ -4,6 +4,8 @@ import { env } from 'process';
 import webpack from 'webpack';
 import { readJsonFromVisual } from './utils.js';
 
+const ModuleFederationPlugin = webpack.container.ModuleFederationPlugin;
+
 const ngJson = readJsonFromVisual('angular.json');
 const projectName = env.VISUAL_NAME!;
 const visualRoot = ngJson.projects[projectName].root;
@@ -25,7 +27,9 @@ getDirectories(sourceRoot).forEach(dir => {
   }
 });
 
-const ModuleFederationPlugin = webpack.container.ModuleFederationPlugin;
+const ngCorePkgJson = readJsonFromVisual('node_modules/@angular/core/package.json');
+const ngVersion = ngCorePkgJson.version;
+const ngMajorVersion = ngVersion.split('.')[0];
 
 export default {
   devServer: {
@@ -52,17 +56,17 @@ export default {
         '@angular/core': {
           singleton: true,
           eager: true,
-          requiredVersion: '^18.0.0',
+          requiredVersion: `^${ngMajorVersion}.0.0`,
         },
         '@angular/common': {
           singleton: true,
           eager: true,
-          requiredVersion: '^18.0.0',
+          requiredVersion: `^${ngMajorVersion}.0.0`,
         },
         '@angular/forms': {
           singleton: true,
           eager: true,
-          requiredVersion: '^18.0.0',
+          requiredVersion: `^${ngMajorVersion}.0.0`,
         },
         'rxjs': {
           singleton: true,
