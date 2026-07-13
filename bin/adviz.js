@@ -15,6 +15,16 @@ const adviz = program
   .addHelpText('beforeAll', `${npmPackage.name} version - ${npmPackage.version}`);
 
 adviz
+  .command('new')
+  .usage('<argument> [options]')
+  .argument('<name>', 'The name of the project/workspace to create.')
+  .option('--workspace', 'Create an empty workspace (no initial project).')
+  .option('--skip-install', 'Skip running npm install after scaffolding.')
+  .action((name, options) => {
+    CommandManager.new(name, options, rootPath);
+  });
+
+adviz
   .command('start')
   .usage('<argument> [options]')
   .argument('<name>', 'The name of the project to build.')
@@ -30,6 +40,24 @@ adviz
   .argument('<name>', 'The name of the project to package.')
   .action((name, options) => {
     CommandManager.package(name, options, rootPath);
+  });
+
+adviz
+  .command('create')
+  .usage('<argument> [options]')
+  .argument('<name>', 'The name of the project to create.')
+  .action((name, options) => {
+    CommandManager.create(name, options, rootPath);
+  });
+
+adviz
+  .command('generate')
+  .alias('g')
+  .usage('<argument> [options]')
+  .argument('<name>', 'The name of the component to generate.')
+  .option('--project <project>', 'The target project name.')
+  .action((name, options) => {
+    CommandManager.generate(name, options, rootPath);
   });
 
 adviz

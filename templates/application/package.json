@@ -1,0 +1,7 @@
+{
+  "name": "{{packageName}}",
+  "version": "0.1.0",
+  "description": "",
+  "filename": "remoteEntry.js",
+  "server": "http://localhost:{{port}}"
+}
