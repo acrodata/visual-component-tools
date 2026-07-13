@@ -1,9 +1,9 @@
 import fs from 'fs-extra';
 import https from 'https';
-import path from 'path';
 import { fileURLToPath } from 'node:url';
+import path from 'path';
 
-export function download(url, pathToFile) {
+export function download(url: string, pathToFile: string) {
   return new Promise((resolve, reject) => {
     const fileStream = fs.createWriteStream(pathToFile);
     https
@@ -16,7 +16,7 @@ export function download(url, pathToFile) {
   });
 }
 
-export function createFolder(folderName): string {
+export function createFolder(folderName: string) {
   const folder = path.join('./', folderName);
   fs.ensureDirSync(folder);
   return folder;

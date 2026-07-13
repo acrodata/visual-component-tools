@@ -1,14 +1,14 @@
-import { spawn } from 'child_process';
-import { env } from 'process';
 import AdmZip from 'adm-zip';
+import { spawn } from 'child_process';
 import fs from 'fs-extra';
 import path from 'path';
+import { env } from 'process';
 import {
-  readJsonFromVisual,
-  getTemplatePath,
-  copyTemplateDir,
   addProjectToAngularJson,
+  copyTemplateDir,
   getNextPort,
+  getTemplatePath,
+  readJsonFromVisual,
 } from './utils.js';
 
 function getNgJson() {
@@ -131,13 +131,13 @@ export default class CommandManager {
       console.log(`Port: ${port}`);
       console.log(`\nRun the following to get started:`);
       console.log(`  cd ${name}`);
-      console.log(`  adviz generate <component-name> --project=${name}`);
+      console.log(`  adviz generate <component-name>`);
     }
 
     // Optionally run npm install
     if (!options.skipInstall) {
       console.log(`\nInstalling dependencies...`);
-      const npm = spawn('npm', ['install'], { cwd: targetDir, stdio: 'inherit' });
+      const npm = spawn('npm', ['install', '--force'], { cwd: targetDir, stdio: 'inherit' });
       npm.on('close', code => {
         if (code === 0) {
           console.log(`\nDone. Happy coding!`);
@@ -213,7 +213,10 @@ export default class CommandManager {
           },
           configurations: {
             production: {
-              budgets: [{ type: 'initial', maximumWarning: '3MB' }, { type: 'anyComponentStyle', maximumWarning: '6kB' }],
+              budgets: [
+                { type: 'initial', maximumWarning: '3MB' },
+                { type: 'anyComponentStyle', maximumWarning: '6kB' },
+              ],
               outputHashing: 'all',
             },
             development: {
