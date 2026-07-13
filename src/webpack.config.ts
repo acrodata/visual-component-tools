@@ -47,8 +47,8 @@ export default {
     new ModuleFederationPlugin({
       name: pkgJson.name,
       library: {
-        type: 'var',
-        name: pkgJson.name,
+        type: 'window',
+        name: ['__VISAPP_VISUAL_PLUGINS__', pkgJson.name],
       },
       filename: pkgJson.filename,
       exposes,
