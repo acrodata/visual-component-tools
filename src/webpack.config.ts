@@ -11,7 +11,7 @@ const projectName = env.VISUAL_NAME!;
 const visualRoot = ngJson.projects[projectName].root;
 const sourceRoot = ngJson.projects[projectName].sourceRoot;
 const pkgJson = readJsonFromVisual(`${visualRoot}/package.json`);
-const exposes = {};
+const exposes: Record<string, string> = {};
 
 const getDirectories = (source: string) =>
   readdirSync(source, { withFileTypes: true })
@@ -33,6 +33,7 @@ const ngMajorVersion = ngVersion.split('.')[0];
 
 export default {
   devServer: {
+    allowedHosts: 'all',
     liveReload: false,
   },
   output: {
