@@ -195,7 +195,6 @@ export default class CommandManager {
             outputPath: `dist/${name}`,
             index: `projects/${name}/src/index.html`,
             main: `projects/${name}/src/main.ts`,
-            polyfills: ['zone.js'],
             tsConfig: `projects/${name}/tsconfig.app.json`,
             inlineStyleLanguage: 'scss',
             assets: [

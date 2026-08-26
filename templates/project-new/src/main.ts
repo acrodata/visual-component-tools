@@ -1,4 +1,4 @@
-import { Component, provideZoneChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 
 @Component({
@@ -11,5 +11,5 @@ export class AppComponent {
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true })],
+  providers: [provideZonelessChangeDetection()],
 }).catch(err => console.error(err));
